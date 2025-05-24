@@ -1,0 +1,26 @@
+name: Deploy to NeoCities
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Deploy to NeoCities
+        uses: bcomnes/deploy-to-neocities@v1
+        with:
+          api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
+          cleanup: true
+          dist_dir: ./
+          
+      - name: Deployment notification
+        run: |
+          echo "🎉 Academic retro site deployed to NeoCities!"
+          echo "Visit: https://techtrainertim.neocities.org"
